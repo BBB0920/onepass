@@ -1,5 +1,6 @@
-INSERT INTO organizations (org_name) VALUES ('Facebook');
-INSERT INTO organizations (org_name) VALUES ('Google');
-INSERT INTO organizations (org_name) VALUES ('Instagram');
-INSERT INTO organizations (org_name) VALUES ('Netflix');
-INSERT INTO organizations (org_name) VALUES ('Lighthouse Labs');
+INSERT INTO organizations (org_name) VALUES ('Adidas');
+INSERT INTO organizations (org_name) VALUES ('Nike');
+INSERT INTO organizations (org_name) VALUES ('Brooks');
+INSERT INTO organizations (org_name) VALUES ('New Balance');
+INSERT INTO organizations (org_name) VALUES ('Hoka');
+
