@@ -94,3 +94,27 @@ async function login(req, res, email, password) {
 }
 
 
+/* Get resources by user
+- retrieve all the passwords, secure notes, and files that belong to a user
+await login(req, res, 'jane.doe@acme.com', 'P@ssw0rd123');
+
+const userId = 1;
+const resources = await getUserResources(userId);
+
+*/
+
+async function getUserResources(userId) {
+  try {
+    await client.connect();
+    const result = await client.query(
+      "SELECT * FROM resources WHERE user_id = $1",
+      [userId]
+    );
+    return result.rows;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await client.end();
+  }
+}
