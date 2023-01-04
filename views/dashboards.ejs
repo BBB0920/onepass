@@ -20,11 +20,11 @@
 <body>
   <h1>This is the dashboard!</h1>
   <div class = "dashboard">
-
     <% info.forEach(website => { %>
       <div>
-        <span><%= website.url %></span>
-        <span><%= website.website_name %></span>
+        <span><%= website.login_url %></span>
+        <span><%= website.name %></span>
+        <span><%= website.user_id %></span>
         <span class = "password"><%= website.password %></span>
         <button class = "edit-btn" data-id="<%= website.id%>">Edit</button>
         <button class = "delete-btn" data-id="<%= website.id%>">Delete</button>
