@@ -50,6 +50,8 @@ const dashboard = require('./routes/dashboards');
 
 const register = require('./routes/register');
 const login = require("./routes/login");
+const auth = require("./routes/auth");
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -61,6 +63,8 @@ app.use('/dashboard', dashboard);
 
 app.use("/register", register);
 app.use("/login", login);
+app.use("/auth", auth);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page

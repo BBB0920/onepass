@@ -7,7 +7,9 @@ const bcrypt = require("bcryptjs");
 
 
 router.get("/", (req, res) => {
-  res.render("register");
+  res.render("auth", { user: req.session.user });
 
 
 });
+
+module.exports = router;
