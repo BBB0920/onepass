@@ -29,35 +29,20 @@ VALUES (1, 'Insurance Policy', 'Policy number: 123456\nExpiration date: 12/31/20
 
 
 
- createUser function to include a check for a valid organizationId value:
-async function createUser(req, res, organizationId, email, password, role) {
-  try {
-    const emailCheck = await db.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email]
-    );
-    if (emailCheck.rowCount > 0) {
-      throw new Error("Email already exists");
-    }
+Questions: 
 
-    // Check for a valid organization ID
-    const organizationCheck = await db.query(
-      "SELECT * FROM organizations WHERE id = $1",
-      [organizationId]
-    );
-    if (organizationCheck.rowCount === 0) {
-      throw new Error("Invalid organization ID");
-    }
+Questions
+=====
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const result = await db.query(
-      "INSERT INTO users (organization_id, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id",
-      [organizationId, email, hashedPassword, role]
-    );
-    const userId = result.rows[0].id;
-    req.session.userId = userId;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
+- making code dry: currently routs have all functionality, where do query functions go (db> queries?) where does server side javascript go? (in the routs?)
+
+- is defining functions by role the best method? Is there an easier way?
+
+SQL
+====
+
+Should we have a username in user table?
+
+Creating a new role table?
+
+Organization User relation - does this relation allow for our usecase?
