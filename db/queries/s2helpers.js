@@ -1,3 +1,5 @@
+const db = require('../connection');
+
 /*
 const users = await getUsersByOrganization('Acme Inc');
 */
@@ -25,30 +27,13 @@ await createUser(1, 'jane.doe@acme.com', 'P@ssw0rd123', 'admin');
 -create session cookie
 */
 
-/*
-impliment b-crypt and cookie session before adding to routs
-
-const express = require('express');
-const cookieSession = require('cookie-session');
-const app = express();
-
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
-}));
-
-app.post('/users', async (req, res) => {
-  await createUser(req, res, 1, 'jane.doe@acme.com', 'P@ssw0rd123', 'admin');
-*/
-
 async function createUser(req, res, organizationId, email, password, role) {
   try {
     await client.connect();
-    const result = await client.query("SELECT * FROM users WHERE email = $1", [
+    const emailCheck = await client.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-    if (result.rowCount > 0) {
+    if (emailCheck.rowCount > 0) {
       throw new Error("Email already exists");
     }
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -118,3 +103,11 @@ async function getUserResources(userId) {
     await client.end();
   }
 }
+
+
+module.exports = {
+  getUsersByOrganization,
+  createUser,
+  login,
+  getUserResources
+};
