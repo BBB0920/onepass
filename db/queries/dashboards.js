@@ -1,3 +1,5 @@
+// Functions used on dashboard page
+
 const db = require('../connection');
 
 // Add new website and its password - NOT IMPLEMENTED YET
@@ -12,7 +14,7 @@ const addWebsites = function(website_name, url, category, password, user_id, org
 // Get all websites that are available to the specified user
 const getWebsites = function(user_id){
   return db
-  .query(`SELECT * FROM passwords WHERE user_id = $1`, [user_id])
+  .query(`SELECT * FROM passwords WHERE user_id = $1 ORDER BY name`, [user_id])
   .then((result) => {
     return result.rows;
   })

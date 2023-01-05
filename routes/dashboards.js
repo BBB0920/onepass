@@ -1,12 +1,11 @@
 const express = require('express');
 const router  = express.Router();
-const websiteHelper = require('../db/queries/websites');
+const websiteHelper = require('../db/queries/dashboards');
 
 // Displays list of User's website
 // Currently using 1 as a standalone
 router.get('/', (req, res) => {
   websiteHelper.getWebsites(1).then(info => {
-    // console.log(info);
     res.render('dashboards', {info});
   })
 });
