@@ -22,3 +22,42 @@ VALUES (1, 'Acme Inc Employee Portal', 'https://employee.acme.com/login', 'jane.
 --Secure_Note
 INSERT INTO secure_notes (user_id, title, note)
 VALUES (1, 'Insurance Policy', 'Policy number: 123456\nExpiration date: 12/31/2022\nCoverage: $500,
+
+
+
+
+
+
+
+ createUser function to include a check for a valid organizationId value:
+async function createUser(req, res, organizationId, email, password, role) {
+  try {
+    const emailCheck = await db.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+    if (emailCheck.rowCount > 0) {
+      throw new Error("Email already exists");
+    }
+
+    // Check for a valid organization ID
+    const organizationCheck = await db.query(
+      "SELECT * FROM organizations WHERE id = $1",
+      [organizationId]
+    );
+    if (organizationCheck.rowCount === 0) {
+      throw new Error("Invalid organization ID");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const result = await db.query(
+      "INSERT INTO users (organization_id, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id",
+      [organizationId, email, hashedPassword, role]
+    );
+    const userId = result.rows[0].id;
+    req.session.userId = userId;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
