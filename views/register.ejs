@@ -27,15 +27,26 @@
       <h1>Create a OnePass Account</h1>
       <main style="margin: 1em">
         <form action="/register" method="post">
-          <label for="organizationId">Organization ID:</label><br>
-          <input type="text" id="organizationId" name="organizationId"><br>
+          <label for="organizationName">Organization Name:</label><br>
+          <input type="text" id="organizationName" name="organizationName"><br>
+
           <label for="email">Email:</label><br>
           <input type="text" id="email" name="email"><br>
+
           <label for="password">Password:</label><br>
           <input type="password" id="password" name="password"><br>
-          <label for="role">Role:</label><br>
-          <input type="text" id="role" name="role"><br><br>
-          <input type="submit" value="Create User">
+
+          <!-- <label for="role">Role:</label><br>
+          <input type="text" id="role" name="role"><br><br> -->
+
+  <input type="radio" id="role" name="role" value="1">Personal<br>
+  <input type="radio" id="role" name="role" value="2">Business<br>
+  <input type="radio" id="role" name="role" value="2">Family<br>
+
+
+
+
+          <input class="btn-baloon-main" type="submit" value="Create User">
         </form>
       </main>
       <div class="break-content">
@@ -43,8 +54,6 @@
       </div>
       <a class="btn-baloon-more" href="/login">Login →</a>
     </div>
-
-
 
 
 </body>
