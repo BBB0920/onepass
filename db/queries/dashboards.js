@@ -12,12 +12,21 @@ const addWebsites = function(website_name, url, category, password, user_id, org
 }
 
 // Get all websites that are available to the specified user
-const getWebsites = function(user_id){
-  return db
-  .query(`SELECT * FROM passwords WHERE user_id = $1 ORDER BY name`, [user_id])
-  .then((result) => {
-    return result.rows;
-  })
+const getWebsites = function(userId, role){
+
+  if(role[0] === 'admin') {
+    return db
+    .query(`SELECT passwords.id as id, user_id, name, login_url, username, password FROM passwords JOIN users ON user_id = users.id WHERE organization_id = $1 ORDER BY name`, [role[1]])
+    .then((result) => {
+      return result.rows;
+    })
+  } else {
+    return db
+    .query(`SELECT * FROM passwords WHERE user_id = $1 ORDER BY name`, [userId])
+    .then((result) => {
+      return result.rows;
+    })
+  }
 }
 
 // Get website based on its id
