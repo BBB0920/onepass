@@ -14,7 +14,7 @@ app.use(cookieSession({
 // Displays list of User's website
 router.get('/', (req, res) => {
 
-  const userId = 1;         //req.session.id; implement this when login featuer is available
+  const userId = 1;         //req.session.id; implement this when login feature is available
   const role = ['admin', 1];  //[req.session.role, req.session.organizationId];
 
   console.log('user id is :', userId);
@@ -37,6 +37,20 @@ router.post('/:id/update', (req, res) => {
     res.redirect('/dashboard');
   });
 });
+
+router.post('/:id/new', (req, res) => {
+
+  const userId = 1; //req.session.id; implement this when login feature is available
+
+  // Implement this when log in feature is available
+  // if(!userId) {
+  //   res.redirect('/');
+  //   return;
+  // }
+
+  websiteHelper.addWebsites(userId, req.body.name, req.body.login_url, req.body.username, req.body.password)
+  res.redirect('/dashboard');
+})
 
 // Deletes entry
 router.post('/:id/delete', (req, res) => {

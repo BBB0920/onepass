@@ -3,9 +3,9 @@
 const db = require('../connection');
 
 // Add new website and its password - NOT IMPLEMENTED YET
-const addWebsites = function(website_name, url, category, password, user_id, organization_id){
+const addWebsites = function(user_id, name, login_url, username, password){
   return db
-  .query(`INSERT INTO websites (website_name, url, category, password, user_id, organization_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [website_name, url, category, password, user_id, organization_id])
+  .query(`INSERT INTO passwords (user_id, name, login_url, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [user_id, name, login_url, username, password])
   .then((result) => {
     return result.rows[0];
   })

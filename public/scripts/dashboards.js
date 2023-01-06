@@ -1,3 +1,5 @@
+// const { addWebsites } = require("../../db/queries/dashboards");
+
 // Add New Password Button
 $(() => {
   $('.new-pwd-btn').on('click', function() {
@@ -16,17 +18,17 @@ $(() => {
 
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Website Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Gmail">
+            <input type="text" class="form-control new-website-name" id="exampleFormControlInput1" placeholder="Gmail">
           </div>
 
           <div class="mb-3">
             <label for="exampleFormControlInput2" class="form-label">Website URL</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="www.gmail.com/login">
+            <input type="text" class="form-control new-website-url" id="exampleFormControlInput1" placeholder="www.gmail.com/login">
           </div>
 
           <div class="mb-3">
-            <label for="exampleFormControlInput3" class="form-label">Your Account ID/Email</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Jane.Doe">
+            <label for="exampleFormControlInput3" class="form-label">Your Account ID/Username</label>
+            <input type="text" class="form-control new-website-username" id="exampleFormControlInput1" placeholder="Jane.Doe">
           </div>
 
           <label for="exampleFormControlInput2" class="form-label">Your Password Specifications</label>
@@ -114,49 +116,54 @@ $(() => {
   getPassword()
     .then((pwrd) => {
       try {
-        document.getElementById("password").remove();
+        document.getElementById("pswd-submit").remove();
       }
       catch(err) {
       }
 
       const editForm = $(`
         <form id="pswd-submit">
-          <input type="text" value="${pwrd}">
-          <button type="submit" class="pwd-submit btn btn-primary" style=>Submit</button>
+          <input type="text" class="final-pwrd" value="${pwrd}">
+          <button type="submit" class="pwd-submit btn btn-primary">Submit</button>
         </form>
       `);
 
       //Append new form after password is generated, as topbar's another child
       ($(this).children('div').last()).append(editForm);
     })
+    .then(() => {
+      $('.s-char').on('submit', '#pswd-submit', function(event) {
+
+        event.preventDefault();
+        /*
+        let data = {password: $("#newPw").val()};
+      $.ajax({
+        url: `/dashboard/2/update`,
+        type: 'POST',
+        data: data
+      })
+      .then(() => {
+        location.reload();
+        */
+
+        let data = {
+          name: $('.new-website-name').val(),
+          login_url: $('.new-website-url').val(),
+          username: $('.new-website-username').val(),
+          password: $('.final-pwrd').val()
+        }
+        $.ajax({
+          url: `dashboard/1/new`,
+          type: 'POST',
+          data: data
+        })
+        .then(() => {
+          location.reload();
+        })
+      })
+    })
   })
 })
-
-// Submit handler for the second form (submit into the database)
-// Password Submit button
-$(() => {
-  $('.overlay-content').on('submit', '#pswd-submit', function(event) {
-    console.log("Final Button");
-    event.preventDefault();
-  })
-})
-
-// Open function for form
-function openNav() {
-  document.getElementById("myNav").style.display = "block";
-}
-
-// Close function for form
-function closeNav() {
-  document.getElementById("myNav").remove();//style.display = "none";
-}
-
-// // Checking the state of a checkbox
-function check(id) {
-  console.log(document.getElementById(id));
-
-  return document.getElementById(id).checked;
-}
 
 //Edit button
 $(() => {
@@ -296,4 +303,21 @@ function password(results, oLength) {
   console.log(`Your new password is ${password}! It is ${password.length} characters long, which is equal to your originally requested length of ${oLength}`);
 
   return(password);
+}
+
+// Open function for form
+function openNav() {
+  document.getElementById("myNav").style.display = "block";
+}
+
+// Close function for form
+function closeNav() {
+  document.getElementById("myNav").remove();//style.display = "none";
+}
+
+// // Checking the state of a checkbox
+function check(id) {
+  console.log(document.getElementById(id));
+
+  return document.getElementById(id).checked;
 }
